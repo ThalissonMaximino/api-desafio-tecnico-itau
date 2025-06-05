@@ -80,4 +80,28 @@ class TransationController {
             return $response->withStatus(404);
         }
     }
+
+    public function dataDeleteById(Request $request, Response $response, array $args) {
+
+        $dao = new TransationDAO;
+
+        $id = $args['id'] ?? null;
+
+    
+        if ($id === null || empty($id)) {
+            return $response->withStatus(404);
+        }
+
+        $verify = $dao->exist($id);
+
+        if($verify)
+        {
+            $dao->dataDeleteById($id);
+            return $response->withStatus(200);
+        }else
+        {
+            return $response->withStatus(404);
+        }
+        
+    }
 }

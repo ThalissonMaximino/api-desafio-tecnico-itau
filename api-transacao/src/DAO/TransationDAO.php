@@ -47,4 +47,9 @@ class TransationDAO
             return null;
         }
     }
+
+    public function dataDeleteById($id) {
+        $stmt = $this->data_base->prepare("DELETE FROM transacao WHERE ID = ?");
+        return $stmt->execute([$id]);
+    }
 }
