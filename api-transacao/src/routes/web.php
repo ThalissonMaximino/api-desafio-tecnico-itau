@@ -7,9 +7,7 @@ use Src\Controller\TransationController;
 
 return function(App $app) {
 
-    
     $app->post('/transacao', [TransationController::class, 'insert']);
-
-    
+    $app->get('/transacao/{id}', [TransationController::class, 'DataReturnById']);
 
 };

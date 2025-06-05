@@ -29,4 +29,22 @@ class TransationDAO
 
         return $stmt->fetchColumn() > 0;
     }
+
+    public function dataReturnById($id) {
+        $stmt = $this->data_base->prepare("SELECT * FROM transacao WHERE ID = ?");
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return [
+                'id' => $result['ID'],
+                'valor' => (float)$result['VALOR'],
+                'dataHora' => $result['DATE_OP']
+            ];
+        } 
+        else
+        {
+            return null;
+        }
+    }
 }

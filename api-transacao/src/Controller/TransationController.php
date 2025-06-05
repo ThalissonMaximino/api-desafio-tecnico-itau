@@ -59,4 +59,25 @@ class TransationController {
 
         return $response->withStatus(201);     
     }
+
+    public function DataReturnById(Request $request, Response $response, array $args) {
+
+        $dao = new TransationDAO;
+
+        $id = $args['id'] ?? null;
+
+        if ($id === null || empty($id)) {
+            return $response->withStatus(404);
+        }
+
+        $result = $dao->dataReturnById($args['id']);
+
+        if ($result) {
+            $response->getBody()->write(json_encode($result));
+
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        } else {
+            return $response->withStatus(404);
+        }
+    }
 }
