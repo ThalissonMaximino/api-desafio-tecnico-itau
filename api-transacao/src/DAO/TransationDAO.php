@@ -58,11 +58,12 @@ class TransationDAO
         return $stmt->execute(); 
     }
 
-    public function getTransactionsInLast60Seconds()
+  
+ public function getTransactionsInLast60Seconds()
     {
         $timeLimit = (new \DateTime())->modify('-60 seconds')->format('Y-m-d H:i:s');
         $stmt = $this->data_base->prepare(
-            "SELECT ID, VALOR, DATE_OP FROM transacao WHERE DATE_OP >= :timeLimit ORDER BY DATE_OP ASC"
+            "SELECT ID, VALOR, DATE_OP FROM transacao WHERE CREATED_AT >= :timeLimit ORDER BY CREATED_AT ASC"
         );
         $stmt->bindParam(':timeLimit', $timeLimit);
         $stmt->execute();
