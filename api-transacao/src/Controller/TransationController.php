@@ -104,4 +104,13 @@ class TransationController {
         }
         
     }
+
+    public function dataDelete(Request $request, Response $response) {
+
+        $dao = new TransationDAO;
+        
+        $dao->allDataDelete();
+
+        return $response->withStatus(200);
+    }
 }

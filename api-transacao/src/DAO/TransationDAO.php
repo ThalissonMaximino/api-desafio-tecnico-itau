@@ -52,4 +52,9 @@ class TransationDAO
         $stmt = $this->data_base->prepare("DELETE FROM transacao WHERE ID = ?");
         return $stmt->execute([$id]);
     }
+
+    public function allDataDelete() {
+        $stmt = $this->data_base->prepare("DELETE FROM transacao");
+        return $stmt->execute(); 
+    }
 }
