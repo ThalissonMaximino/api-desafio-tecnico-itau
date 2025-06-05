@@ -57,4 +57,16 @@ class TransationDAO
         $stmt = $this->data_base->prepare("DELETE FROM transacao");
         return $stmt->execute(); 
     }
+
+    public function getTransactionsInLast60Seconds()
+    {
+        $timeLimit = (new \DateTime())->modify('-60 seconds')->format('Y-m-d H:i:s');
+        $stmt = $this->data_base->prepare(
+            "SELECT ID, VALOR, DATE_OP FROM transacao WHERE DATE_OP >= :timeLimit ORDER BY DATE_OP ASC"
+        );
+        $stmt->bindParam(':timeLimit', $timeLimit);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
 }

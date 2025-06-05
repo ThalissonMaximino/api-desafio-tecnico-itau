@@ -113,4 +113,37 @@ class TransationController {
 
         return $response->withStatus(200);
     }
+
+    public function calculateStatistics(Request $request, Response $response) {
+        $dao = new TransationDAO();
+        $transactions = $dao->getTransactionsInLast60Seconds();
+
+        $count = count($transactions);
+        $sum = 0.0;
+        $avg = 0.0;
+        $min = 0.0;
+        $max = 0.0;
+
+        if ($count > 0) {
+            $values = array_column($transactions, 'VALOR'); 
+            
+            $values = array_map('floatval', $values);
+
+            $sum = array_sum($values);
+            $avg = $sum / $count;
+            $min = min($values);
+            $max = max($values);
+        }
+
+        $statistics = [
+            'count' => $count,
+            'sum' => round($sum, 2),
+            'avg' => round($avg, 2),
+            'min' => round($min, 2),
+            'max' => round($max, 2),
+        ];
+
+        $response->getBody()->write(json_encode($statistics));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    }
 }

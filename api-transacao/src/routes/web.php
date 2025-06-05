@@ -11,5 +11,9 @@ return function(App $app) {
     $app->get('/transacao/{id}', [TransationController::class, 'DataReturnById']);
     $app->delete('/transacao/{id}', [TransationController::class, 'dataDeleteById']);
     $app->delete('/transacao', [TransationController::class, 'dataDelete']);
+    $app->get('/estatistica', [TransationController::class, 'calculateStatistics']);
+    $app->map(['GET', 'POST','DELETE',], '/{routes:.+}', function ($request, $response) { 
+        return $response->withStatus(404);
+    });     
 
 };
